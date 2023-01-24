@@ -1,40 +1,27 @@
 package jm.task.core.jdbc;
 
-import jm.task.core.jdbc.service.UserServiceImpl;
+import jm.task.core.jdbc.dao.UserDao;
+import jm.task.core.jdbc.dao.UserDaoHibernateImpl;
+import jm.task.core.jdbc.util.Util;
 
-import javax.swing.*;
-import java.sql.SQLOutput;
 
 public class Main {
     public static void main(String[] args) {
         // реализуйте алгоритм здесь
-        UserServiceImpl test = new UserServiceImpl();
-
-        test.createUsersTable();
-
-        test.saveUser("Альберт", "Манасов", (byte) 25);
-        test.saveUser("Иван", "Иванов", (byte) 23);
-        test.saveUser("Василий", "Пупкин", (byte) 31);
-        test.saveUser("Еще", "Один", (byte) 42);
+        Util.getSessionFactory();
+        UserDao userDao = new UserDaoHibernateImpl();
+        userDao.dropUsersTable();
+        userDao.createUsersTable();
 
 
-        System.out.println(test.getAllUsers());
+        userDao.saveUser("Альберт", "Манасов", (byte) 25);
+        userDao.saveUser("Кристина", "Статьцкая", (byte) 21);
+        userDao.saveUser("Савельев", "Дмитрий", (byte) 27);
+        userDao.saveUser("Ксения", "Малкова", (byte) 21);
 
+        userDao.getAllUsers();
 
-        test.cleanUsersTable();
-        test.dropUsersTable();
-
-
-
-
-
-
-
-
-
-
-
-
-
+        userDao.cleanUsersTable();
+        userDao.dropUsersTable();
     }
 }
